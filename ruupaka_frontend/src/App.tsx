@@ -1,13 +1,23 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
 import './App.css';
-import { SearchBar } from './components/SearchBar';
-import { SearchResultsList } from './components/SearchResultsList';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from './components/Home';
 
 function App() {
 
   const [results, setResults] = useState([]);
 
+  return(
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home/>} index />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
+
+  /*
   return(
     <div className='App'>
       <div className='search-bar-container'>
@@ -20,6 +30,7 @@ function App() {
       </div>
     </div>
   );
+  */
 }
 
 export default App

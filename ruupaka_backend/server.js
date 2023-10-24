@@ -1,22 +1,18 @@
-import express, { json } from 'express';
-import cors from 'cors';
-import { Client } from 'elasticsearch';
+const express = require('express')
+const cors = require('cors')
+const elasticSearch = require('elasticsearch')
 
-const app = express();
-const port = 3000;
+const app = express()
+const port = 3000
 
 const indexName = 'ruupaka'
 
-const client = new Client({
+const client = new elasticSearch.Client({
     host: 'http://localhost:9200',
 })
 
-app.use(json())
+app.use(express.json())
 app.use(cors())
-
-app.get('/', (req, res) => {
-    res.send('Welcome to Ruupaka')
-})
 
 app.get('/getAllMetaphors', (req, res) => {
     client.search({
@@ -24,98 +20,94 @@ app.get('/getAllMetaphors', (req, res) => {
         body: {
             size: 300,
             query:{
-                match_all: {},
+                match: {
+                    metaphor_count: "1"
+                },
             },
         },
     }).then((response) => {
         res.json(response.hits.hits)
     }).catch((error)=>{
-        res.status(500).json({error: "Error retrieving all the data"})
+        res.status(500).json({ error: "Error retrieving search data" })
     })
 })
 
-app.post('/searchByPoemName', async (req, res) => {
-    const poem = await req.body.poem_name_in_sinhala;
-    console.log(req.body)
-    client.search({
+app.get("/searchQuery", async (req, res) => {
+    const sourceDomain = await req.query.source_domain
+    const targetDomain = await req.query.target_domain
+    const metaphorType = await req.query.metaphor_type_in_sinhala
+    const poem = await req.query.poem_name_in_sinhala
+    const poet = await req.query.poet_in_sinhala
+
+    console.log(req.query)
+
+    let searchQuery = {
         index: indexName,
         body: {
-            size: 30,
+            size: 300,
             query: {
-                match: {
-                    'poem_name_in_sinhala': poem,
-                }
+                bool: {
+                    must: [],
+                },
+            },
+        },
+    }
+
+    if (sourceDomain) {
+        searchQuery.body.query.bool.must.push({
+            match: {
+                source_domain: sourceDomain
             }
-        }
-    }).then((response) => {
-        res.json(response.hits.hits)
-    }).catch((error) => {
-        res.status(500).send('Error retrieving target data')
-    })
-})
+        })
+    }
 
-/*
-app.post('/metaphorTypeSearch', async (req, res) => {
-    const type = await req.body.metaphor_type_in_sinhala;
-    console.log(req.body)
-    client.search({
-        index: indexName,
-        body: {
-            size: 30,
-            query: {
-                match: {
-                    'metaphor_type_in_sinhala': type,
-                }
+    if (targetDomain) {
+        searchQuery.body.query.bool.must.push({
+            match: {
+                target_domain: targetDomain
             }
-        }
-    }).then((response) => {
-        res.json(response.hits.hits)
-    }).catch((error) => {
-        res.status(500).send('Error retrieving data')
-    })
-})
+        })
+    }
 
+    if (metaphorType) {
+        searchQuery.body.query.bool.must.push({
+            match: {
+                metaphor_type_in_sinhala: metaphorType
+            }
+        })
+    }
 
-app.post('/sourceSearch', async (req, res) => {
-    const source = await req.body.source_domain
-    // console.log(req.body)
-    client.search({
-        index: indexName,
-        body: {
-            size: 30,
-            query: {
-                match: {
-                    'source_domain': source,
-                }
+    if (poem) {
+        searchQuery.body.query.bool.must.push({
+            match: {
+                poem_name_in_sinhala: poem
+            }
+        })
+    }
+
+    if (poet) {
+        searchQuery.body.query.bool.must.push({
+            match: {
+                poet_in_sinhala: poet
+            }
+        })
+    }
+
+    if (searchQuery.body.query.bool.must.length === 0) {
+        searchQuery.body.query = {
+            match: {
+                metaphor_count: "1"
             },
         }
-    }).then((response) => {
+    }
+
+    console.log(searchQuery.json)
+    client.search(searchQuery).then((response) => {
         res.json(response.hits.hits)
     }).catch((error) => {
-        res.status(500).send('Error retrieving source data')
+        res.status(500).json({ error: "Error retrieving search data" })
     })
 })
-
-app.post('/targetSearch', async (req, res) => {
-    const target = await req.body.target_domain;
-
-    client.search({
-        index: indexName,
-        body: {
-            size: 30,
-            query: {
-                match: {
-                    'target_domain': target,
-                }
-            }
-        }
-    }).then((response) => {
-        res.json(response.hits.hits)
-    }).catch((error) => {
-        res.status(500).send('Error retrieving target data')
-    })
-})
-*/
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
