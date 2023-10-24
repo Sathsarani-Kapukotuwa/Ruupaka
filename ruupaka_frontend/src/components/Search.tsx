@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Container, Stack, TextField, Button } from "@mui/material";
+import { Container, Stack, TextField, Button, MenuItem } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import SearchTable from "./SearchTable";
+import './Search.css'
 
 function Search(){
     const [data_file, set_data_file] = useState([]);
@@ -30,11 +31,22 @@ function Search(){
           .catch((error) => console.log("Error in Get All Metaphors:", error));
     }, []);
 
+    const metaphor_types = [
+        {
+          value: 'රූපක​',
+          label: 'රූපක​',
+        },
+        {
+          value: 'උපමා',
+          label: 'උපමා',
+        },
+      ];
+
     return(
         <div>
         <form noValidate autoComplete="off">
             <main>
-            <Container fixed>
+            <Container fixed className="text-fields-container">
                 <Stack
                 sx={{ pt: 4 }}
                 direction="column"
@@ -49,7 +61,7 @@ function Search(){
                         value={source_domain}
                         onChange={(e) => set_source_domain(e.target.value)}
                         fullWidth
-                        margin="normal" 
+                        margin="normal"
                     />
                     <TextField
                         label="Target Domain"
@@ -60,13 +72,22 @@ function Search(){
                         margin="normal" 
                     />
                     <TextField
-                        label="Metaphor Type"
+                        id="outlined-select-currency"
                         variant="outlined"
-                        value={metaphor_type_in_sinhala}
+                        select
+                        label="Metaphor Type"
+                        defaultValue="රූපක"
                         onChange={(e) => set_metaphor_type(e.target.value)}
                         fullWidth
-                        margin="normal" 
-                    />
+                        margin="normal"
+                    >
+                        {metaphor_types.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                    
                     <TextField
                         label="Poem"
                         variant="outlined"
@@ -86,15 +107,26 @@ function Search(){
                     
                     <Button
                         variant="contained"
-                        startIcon={<SearchIcon />}
-                        sx={{ width: "350px" }}
+                        sx={{
+                            width: "350px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            fontSize: "16px",
+                            backgroundColor: "#581845",
+                            "&:hover": {
+                                backgroundColor: "#663056"
+                            }
+                        }}
                         onClick={searchInputs}
                     >
-                    Search
+                        <SearchIcon sx={{ fontSize: 36 }} /> 
                     </Button>
                 </Stack>
-                {/* <MetaphorSearchResultTable dataJson={backendData} /> */}
+                {}
                 </Stack>
+            </Container>
+            <Container className="space">
             </Container>
             <Container>
                 <SearchTable dataJson={data_file} />

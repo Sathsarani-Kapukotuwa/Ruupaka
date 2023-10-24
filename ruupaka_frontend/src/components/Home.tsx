@@ -1,6 +1,7 @@
 import { Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import Search from "./Search";
+import Title from "./Title";
 
 function Home(){
     const [data_file, set_data_file] = useState([]);
@@ -22,6 +23,9 @@ function Home(){
 
       return(
         <div>
+            <div>
+                <Title/>
+            </div>
             <Container>
                 <Search/>
             </Container>
