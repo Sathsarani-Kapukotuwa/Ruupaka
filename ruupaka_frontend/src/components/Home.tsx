@@ -13,7 +13,7 @@ function Home(){
     const [poet, set_poet] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:3000/getAllMetaphors")
+        fetch("http://localhost:3000/getEmptyTable")
           .then((response) => response.json())
           .then((data) => {
             set_data_file(data.map((item: any) => item._source));

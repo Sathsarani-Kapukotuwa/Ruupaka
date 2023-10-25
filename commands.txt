@@ -1,21 +1,25 @@
 step 1:
-    Run below command in the elastcsearch/bin folder
-        elasticsearch.bat
+    Download the analysis-icu folder in to your elasticsearch folder and run below code in elastcsearch/bin folder
+		elasticsearch-plugin.bat install analysis-icu
 
 step 2:
-    Run below command in the kibana/bin folder
-        kibana.bat     
+    Run below command in elastcsearch/bin folder
+        elasticsearch.bat
 
 step 3:
+    Run below command in kibana/bin folder
+        kibana.bat     
+
+step 4:
     Run below commands in the Ruupaka directory:
         curl -X DELETE "localhost:9200/ruupaka?pretty"
         curl -X PUT "localhost:9200/ruupaka?pretty" -H "Content-Type: application/json" -d @mapping_file.json
         curl -X POST "localhost:9200/ruupaka/_bulk?pretty" -H "Content-Type: application/json" --data-binary @data_file.json
 
-step 4:
+step 5:
     Run below command in the ruupaka_backend directory
         npm run devStart
 
-step 5:
+step 6:
     Run below command in the ruupaka_frontend directory
         npm run dev

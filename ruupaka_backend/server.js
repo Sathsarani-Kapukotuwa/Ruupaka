@@ -14,7 +14,7 @@ const client = new elasticSearch.Client({
 app.use(express.json())
 app.use(cors())
 
-app.get('/getAllMetaphors', (req, res) => {
+app.get('/getEmptyTable', (req, res) => {
     client.search({
         index: indexName, 
         body: {
