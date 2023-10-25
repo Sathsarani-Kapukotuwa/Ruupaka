@@ -2,6 +2,7 @@ import { Button, Container, Paper, Table, TableBody, TableCell, TableContainer, 
 import { useEffect, useState } from "react";
 import Search from "./Search";
 import Title from "./Title";
+import './Home.css'
 
 function Home(){
     const [data_file, set_data_file] = useState([]);
@@ -22,12 +23,14 @@ function Home(){
       }, []);
 
       return(
-        <div>
+        <div className="Home">
             <div>
                 <Title/>
             </div>
             <Container>
                 <Search/>
+            </Container>
+            <Container className="space">
             </Container>
         </div>
       );

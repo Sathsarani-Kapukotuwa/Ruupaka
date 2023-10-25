@@ -8,7 +8,7 @@ function App() {
   const [results, setResults] = useState([]);
 
   return(
-    <div>
+    <div className='App'>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home/>} index />

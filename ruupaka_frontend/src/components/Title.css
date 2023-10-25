@@ -2,12 +2,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 20vh;
+    /*height: 20vh;*/
   }
   
   .centered-header {
     text-align: center;
     font-family: "Brush Script MT", cursive;
     font-size: 4.5em;
-    color: #581845;
+    /*color: #581845;*/
+    color: #5D3953;
+    margin-top: 35px;
   }

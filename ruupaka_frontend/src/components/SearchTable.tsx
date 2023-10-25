@@ -1,4 +1,5 @@
-import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
+import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Container } from "@mui/material";
+import { green } from "@mui/material/colors";
 import React from "react";
 
 interface MetaphorData {
@@ -14,39 +15,39 @@ interface MetaphorData {
 
 function SearchTable({dataJson}:{dataJson: MetaphorData[]}){
     return(
-      <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Metaphor</TableCell>
-            <TableCell align="right">Interpretation</TableCell>
-            <TableCell align="right">Metaphor Type</TableCell>
-            <TableCell align="right">Source Domain</TableCell>
-            <TableCell align="right">Target Domain</TableCell>
-            <TableCell align="right">Poem</TableCell>
-            <TableCell align="right">Poet</TableCell>
-            <TableCell align="right">Year</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {dataJson.map((row, index) => (
-            <TableRow
-              key={index}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell>{row.metaphor}</TableCell>
-              <TableCell align="right">{row.interpretation_in_sinhala}</TableCell>
-              <TableCell align="right">{row.metaphor_type_in_sinhala}</TableCell>
-              <TableCell align="right">{row.source_domain}</TableCell>
-              <TableCell align="right">{row.target_domain}</TableCell>
-              <TableCell align="right">{row.poem_name_in_sinhala}</TableCell>
-              <TableCell align="right">{row.poet_in_sinhala}</TableCell>
-              <TableCell align="right">{row.year}</TableCell>
+        <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 750,  backgroundColor: "#d9dfe9" }} aria-label="simple table">
+          <TableHead>
+            <TableRow sx={{ border:'3px solid #eee' }}>
+              <TableCell sx={{ fontWeight: 'bold' }} align="center">Metaphor</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }} align="center">Interpretation</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }} align="center">Metaphor Type</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }} align="center">Source Domain</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }} align="center">Target Domain</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }} align="center">Poem</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }} align="center">Poet</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }} align="center">Year</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {dataJson.map((row, index) => (
+              <TableRow
+                key={index}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 }, border:'3px solid #eee' }}
+              >
+                <TableCell align="center">{row.metaphor}</TableCell>
+                <TableCell align="center">{row.interpretation_in_sinhala}</TableCell>
+                <TableCell align="center">{row.metaphor_type_in_sinhala}</TableCell>
+                <TableCell align="center">{row.source_domain}</TableCell>
+                <TableCell align="center">{row.target_domain}</TableCell>
+                <TableCell align="center">{row.poem_name_in_sinhala}</TableCell>
+                <TableCell align="center">{row.poet_in_sinhala}</TableCell>
+                <TableCell align="center">{row.year}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     );
 }
 

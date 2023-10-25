@@ -33,6 +33,10 @@ function Search(){
 
     const metaphor_types = [
         {
+            value: '',
+            label: 'Select',
+        },
+        {
           value: 'රූපක​',
           label: 'රූපක​',
         },
@@ -76,7 +80,7 @@ function Search(){
                         variant="outlined"
                         select
                         label="Metaphor Type"
-                        defaultValue="රූපක"
+                        defaultValue="Select"
                         onChange={(e) => set_metaphor_type(e.target.value)}
                         fullWidth
                         margin="normal"
@@ -113,7 +117,7 @@ function Search(){
                             justifyContent: "center",
                             alignItems: "center",
                             fontSize: "16px",
-                            backgroundColor: "#581845",
+                            backgroundColor: "#5D3953",
                             "&:hover": {
                                 backgroundColor: "#663056"
                             }
@@ -126,9 +130,7 @@ function Search(){
                 {}
                 </Stack>
             </Container>
-            <Container className="space">
-            </Container>
-            <Container>
+            <Container className="search-table">
                 <SearchTable dataJson={data_file} />
             </Container>
             </main>
